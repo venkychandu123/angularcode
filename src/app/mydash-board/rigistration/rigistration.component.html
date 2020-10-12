@@ -1,0 +1,95 @@
+<div class="col-md-6 card offset-md-3 mt-5" id="signupForm">
+    <div class="card-body">
+        <form [formGroup]="signup" (ngSubmit)="addnewuser()">
+            <h1 class="text-center text-primary">Add New User</h1>
+            <div class="form-group mb-1">
+                <label for="name">FirstName:</label>
+                <input type="text" class="form-control" id="name" formControlName="firstname">
+            </div>
+            <div *ngIf="fname.invalid && fname.touched"
+                class="alert alert-danger  p-2">
+                <div *ngIf="fname.errors.required">
+                    first name is required
+                </div>
+                <div *ngIf="fname.errors.pattern">
+                    invalid first name
+                </div>
+            </div>
+            <div class="form-group mb-1 ">
+                <label for="name">LastName:</label>
+                <input type="text" class="form-control" id="name" formControlName="lastname">
+            </div>
+            <div *ngIf="lname.invalid && lname.touched"
+                class="alert alert-danger p-2">
+                <div *ngIf="lname.errors.required">
+                    last name is required
+                </div>
+                <div *ngIf="lname.errors.pattern">
+                    invalid last name
+                </div>
+            </div>
+            <div class="form-group mb-1 ">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" formControlName="email">
+            </div>
+            <div *ngIf="mail.invalid && mail.touched" class="alert alert-danger p-2">
+                <div *ngIf="mail.errors.required">
+                    Email is required
+                </div>
+                <div *ngIf="mail.errors.pattern">
+                    invalid email
+                </div>
+            </div>
+            <div class="form-group mb-1 ">
+                <label for="phonenumber">Phone Number:</label>
+                <input type="text" class="form-control" id="number" formControlName="phonenumber">
+            </div>
+            <div *ngIf="pnumber.invalid && pnumber.touched"
+                class="alert alert-danger p-2">
+                <div *ngIf="pnumber.errors.required">
+                    phonenumber is required
+                </div>
+                <div *ngIf="pnumber.errors.pattern">
+                    invalid phone number
+                </div>
+            </div>
+            <div class="form-group mb-1 ">
+                <label for="age">Age:</label>
+                <input type="text" class="form-control" id="age" formControlName="age">
+            </div>
+            <div  class="alert alert-danger p-2 " *ngIf=" age.invalid && age.touched">
+                <div *ngIf="age.errors.required"> age is required</div>
+                <div *ngIf="age.errors.pattern"> invalid age</div>
+            </div>
+            <button class="btn btn-block btn-success mt-3">Add User</button>
+        </form>
+    </div>
+</div>
+<div class="container mt-5">
+    <h1 class="text-uppercase text-center text-info">User details</h1>
+ <table class="table table-bordered">
+   <thead class="thead-dark">
+     <tr>
+       <th>firstName</th>
+       <th>lastname </th>
+       <th>phonenumber</th>
+       <th>email</th>
+       <th>age</th>
+     </tr>
+   </thead>
+   <tbody>
+        <tr *ngFor=" let x of formvalues">
+            <td>{{x.FName}}</td>
+            <td>{{x.Lname }}</td>
+            <td> {{x.pnumber}}</td>
+            <td>{{x.mail}}</td>
+            <td>{{x.AGE }}</td>
+        </tr>
+   </tbody>
+ </table>
+ <div>
+
+    
+ 
+
+
