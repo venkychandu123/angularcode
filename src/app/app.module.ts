@@ -10,8 +10,12 @@ import { PagenotfoundComponent } from './mydash-board/pagenotfound/pagenotfound.
 import { RigistrationComponent } from './mydash-board/rigistration/rigistration.component';
 import { HomeComponent } from './mydash-board/home/home.component';
 import { UserpostComponent } from './mydash-board/userpost/userpost.component';
-
-
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { AddcustomerAddressComponent } from './mydash-board/addcustomer-address/addcustomer-address.component';
+import { TextMaskModule } from 'angular2-text-mask';
+import { PhonenumberFormatPipe } from './phonenumber-format.pipe';
+import { AddprofileComponent } from './mydash-board/addprofile/addprofile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,15 +25,24 @@ import { UserpostComponent } from './mydash-board/userpost/userpost.component';
     RigistrationComponent,
     HomeComponent,
     UserpostComponent,
+    AddcustomerAddressComponent,
+    PhonenumberFormatPipe,
+    AddprofileComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TextMaskModule,
+    ModalModule.forRoot(),
+    AlertModule.forRoot(),
+   
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[]
 })
 export class AppModule { }

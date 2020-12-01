@@ -1,95 +1,128 @@
-<div class="col-md-6 card offset-md-3 mt-5" id="signupForm">
+<div *ngFor="let alert of alerts" class="d-flex justify-content-center">
+    <alert [type]="alert.type" class="mb-0 mt-3" [dismissible]="dismissible" (onClosed)="onClosed(alert)">
+        {{ alert.msg }}</alert>
+</div>
+<div class="col-md-8 card offset-md-2 mt-5 position-relative" id="signupForm">
     <div class="card-body">
-        <form [formGroup]="signup" (ngSubmit)="addnewuser()">
+        <form [formGroup]="adminForm" #form>
             <h1 class="text-center text-primary">Add New User</h1>
-            <div class="form-group mb-1">
-                <label for="name">FirstName:</label>
-                <input type="text" class="form-control" id="name" formControlName="firstname">
-            </div>
-            <div *ngIf="fname.invalid && fname.touched"
-                class="alert alert-danger  p-2">
-                <div *ngIf="fname.errors.required">
-                    first name is required
+            <div class="form-row mb-3">
+                <div class="col-md-6 col-12">
+                    <label for="name" class="input-heading">FirstName:</label>
+                    <input type="text" class="form-control" id="name" formControlName="firstname">
+                    <div *ngIf=" submitted && addNewUserControls.firstname.errors"
+                        class="alert alert-danger mt-1 p-2 mb-0">
+                        <div *ngIf="addNewUserControls.firstname.errors.required">
+                            first name is required
+                        </div>
+                        <div *ngIf="addNewUserControls.firstname.errors.pattern">
+                            invalid first name
+                        </div>
+                    </div>
                 </div>
-                <div *ngIf="fname.errors.pattern">
-                    invalid first name
-                </div>
-            </div>
-            <div class="form-group mb-1 ">
-                <label for="name">LastName:</label>
-                <input type="text" class="form-control" id="name" formControlName="lastname">
-            </div>
-            <div *ngIf="lname.invalid && lname.touched"
-                class="alert alert-danger p-2">
-                <div *ngIf="lname.errors.required">
-                    last name is required
-                </div>
-                <div *ngIf="lname.errors.pattern">
-                    invalid last name
-                </div>
-            </div>
-            <div class="form-group mb-1 ">
-                <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" formControlName="email">
-            </div>
-            <div *ngIf="mail.invalid && mail.touched" class="alert alert-danger p-2">
-                <div *ngIf="mail.errors.required">
-                    Email is required
-                </div>
-                <div *ngIf="mail.errors.pattern">
-                    invalid email
+                <div class="col-12 col-md-6">
+                    <label for="name" class="input-heading">LastName:</label>
+                    <input type="text" class="form-control" id="name" formControlName="lastname">
+                    <div *ngIf="submitted && addNewUserControls.lastname.errors"
+                        class="alert alert-danger p-2 mt-1 mb-0">
+                        <div *ngIf="addNewUserControls.lastname.errors.required">
+                            last name is required
+                        </div>
+                        <div *ngIf="addNewUserControls.lastname.errors.pattern">
+                            invalid last name
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group mb-1 ">
-                <label for="phonenumber">Phone Number:</label>
-                <input type="text" class="form-control" id="number" formControlName="phonenumber">
-            </div>
-            <div *ngIf="pnumber.invalid && pnumber.touched"
-                class="alert alert-danger p-2">
-                <div *ngIf="pnumber.errors.required">
-                    phonenumber is required
+            <div class="form-row mb-3">
+                <div class="col-12 col-md-6">
+                    <label for="email" class="input-heading">Email:</label>
+                    <input type="text" class="form-control" id="email" formControlName="email">
+                    <div *ngIf="submitted && addNewUserControls.email.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                        <div *ngIf="addNewUserControls.email.errors.required">
+                            Email is required
+                        </div>
+                        <div *ngIf="addNewUserControls.email.errors.email">
+                            invalid email
+                        </div>
+                    </div>
                 </div>
-                <div *ngIf="pnumber.errors.pattern">
-                    invalid phone number
+                <div class="col-12 col-md-6">
+                    <label for="phonenumber" class="input-heading">Phone Number:</label>
+                    <input type="text" class="form-control" id="number" formControlName="phonenumber">
+                    <div *ngIf="submitted && addNewUserControls.phonenumber.errors"
+                        class="alert alert-danger mt-1 p-2 mb-0">
+                        <div *ngIf="addNewUserControls.phonenumber.errors.required">
+                            phonenumber is required
+                        </div>
+                        <div *ngIf="addNewUserControls.phonenumber.errors.pattern">
+                            invalid phone number
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group mb-1 ">
-                <label for="age">Age:</label>
-                <input type="text" class="form-control" id="age" formControlName="age">
+            <div class="form-row mb-3">
+                <div class="col">
+                    <label for="age" class="input-heading">Age:</label>
+                    <input type="text" class="form-control" appCustomeagevalidation id="age" formControlName="age">
+                    <div class="alert alert-danger p-2 mt-1 " *ngIf=" submitted && addNewUserControls.age.errors">
+                        <div *ngIf="addNewUserControls.age.errors.required"> age is required</div>
+                        <div *ngIf="addNewUserControls.age.errors.age_notvalid"> invalid age</div>
+                    </div>
+                </div>
             </div>
-            <div  class="alert alert-danger p-2 " *ngIf=" age.invalid && age.touched">
-                <div *ngIf="age.errors.required"> age is required</div>
-                <div *ngIf="age.errors.pattern"> invalid age</div>
+            <div class="form-row mb-3">
+                <div class="col-md-12">
+                    <label for="file-id"  class="input-heading">Upload Image</label>
+                    <input type="file" #myInput (change)="onSelectFile($event)" class="form-control" id="file-id"  />
+                </div>
+                <div class="col-md-4 image-name">{{imageName}}</div>
+                <div class="col-md-6">
+                        <i class="fa fa-eye" aria-hidden="true" *ngIf="value" (click)="openModal(template)"></i>
+                        <i class="fa fa-times-circle ml-2" aria-hidden="true" (click)="removeImg()" *ngIf="value"></i>
+                        <ng-template #template>
+                        <div class="modal-header">
+                            <h4 class="modal-title pull-left">Modal</h4>
+                            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h1>image</h1>
+                                <img class="w-100" [src]="url"  alt="Image not selected">
+                        </div>
+                    </ng-template>
+                </div>
             </div>
-            <button class="btn btn-block btn-success mt-3">Add User</button>
+            <button class="btn float-right btn-success mt-3" (click)="addNewUser()">Add User</button>
         </form>
     </div>
 </div>
+
 <div class="container mt-5">
-    <h1 class="text-uppercase text-center text-info">User details</h1>
- <table class="table table-bordered">
-   <thead class="thead-dark">
-     <tr>
-       <th>firstName</th>
-       <th>lastname </th>
-       <th>phonenumber</th>
-       <th>email</th>
-       <th>age</th>
-     </tr>
-   </thead>
-   <tbody>
-        <tr *ngFor=" let x of formvalues">
-            <td>{{x.FName}}</td>
-            <td>{{x.Lname }}</td>
-            <td> {{x.pnumber}}</td>
-            <td>{{x.mail}}</td>
-            <td>{{x.AGE }}</td>
-        </tr>
-   </tbody>
- </table>
- <div>
-
-    
- 
-
-
+        <h1 class="text-uppercase text-center text-info">User details</h1>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>firstName</th>
+                    <th>lastname </th>
+                    <th>phonenumber</th>
+                    <th>email</th>
+                    <th>age</th>
+                    <th>uploadImage</th>
+                    <th>edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor=" let x of addingNewUsers;index as i">
+                    <td>{{x.FName}}</td>
+                    <td>{{x.Lname }}</td>
+                    <td> {{x.pnumber}}</td>
+                    <td>{{x.mail}}</td>
+                    <td>{{x.AGE }}</td>
+                    <td>{{x.FILE }}</td>
+                    <td><button class="btn btn-info" (click)="editCustomerDetails(x,i)">edit</button></td>
+                </tr>
+            </tbody>
+        </table>
+    <div>

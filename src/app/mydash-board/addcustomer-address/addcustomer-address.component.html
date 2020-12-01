@@ -1,0 +1,136 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="text-center text-info text-capitalize">customer address</h1>
+            <form action="" [formGroup]="customerAddressform" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" formControlName="name">
+                            <div *ngIf=" submitted && addCustomer_controllers.name.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                                <div *ngIf="addCustomer_controllers.name.errors.required">name is required</div>
+                                <div *ngIf="addCustomer_controllers.name.errors.pattern">invalid name</div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="inputEmail4">phone</label>
+                            <input type="tel" class="form-control" formControlName="phone" [textMask]="{mask: phoneNumber_masking}">
+                            <div *ngIf=" submitted && addCustomer_controllers.phone.errors"
+                                class="alert alert-danger mt-1 p-2 mb-0">
+                                <div *ngIf="addCustomer_controllers.phone.errors.required_number">mobile number is required</div>
+                                <div *ngIf="addCustomer_controllers.phone.errors.pattern_pattern">invalid mobile number </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="inputEmail4">Address</label>
+                            <input type="text" class="form-control" formControlName="address">
+                            <div *ngIf=" submitted && addCustomer_controllers.address.errors"
+                                class="alert alert-danger mt-1 p-2 mb-0">
+                                <div *ngIf="addCustomer_controllers.address.errors.required">address is required</div>
+                                <div *ngIf="addCustomer_controllers.address.errors.pattern">invalid address</div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="inputEmail4">city</label>
+                            <input type="" class="form-control" formControlName="city">
+                            <div *ngIf=" submitted && addCustomer_controllers.city.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                                <div *ngIf="addCustomer_controllers.city.errors.required">city is required</div>
+                                <div *ngIf="addCustomer_controllers.city.errors.pattern">invalid city</div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="inputEmail4">zip</label>
+                            <input type="" class="form-control" formControlName="zip">
+                            <div *ngIf=" submitted && addCustomer_controllers.zip.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                                <div *ngIf="addCustomer_controllers.zip.errors.required">zip is required</div>
+                                <div *ngIf="addCustomer_controllers.zip.errors.pattern">invalid zip</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input class="mt-2" type="checkbox" formControlName="storehour"
+                                (change)="disabledStoreHour($event)" [(ngModel)]="storeHour_value" />
+                            <label class="form-check-label ml-2" for="defaultCheck1">
+                                Store hours not applicable
+                            </label>
+                        </div>
+                        <div formArrayName="store">
+                            <div *ngFor="let value of storeArray.controls;let j=index;last as lastindex;"
+                                [formGroupName]="j">
+                                <div > 
+                                    <div class="form-group" formArrayName="dayoftheweek" >
+                                        <label  class="container-1 ml-1 ml-md-2"*ngFor="let day of dayOfthe_week;let i=index" >
+                                            <input type="checkbox" class="form-control"  [formControlName]="i">
+                                            <span class="checkmark">{{day}}</span>
+                                        </label>
+                                        <div *ngIf="(submitted &&  value.get('dayoftheweek').errors) || (validating_storeHour &&  value.get('dayoftheweek').errors)"
+                                            class="alert alert-danger mt-1 p-2 mb-0">
+                                            please select day of the week
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-4 form-group">
+                                            <input type="text" class="form-control time" formControlName="from">
+                                            <div *ngIf="  (submitted &&   value.get('from').errors) ||(validating_storeHour &&   value.get('from').errors)"
+                                                class="alert alert-danger mt-1 p-2 mb-0">
+                                                <div *ngIf="value.get('from').errors?.required_time">
+                                                    time is required</div>
+                                                <div *ngIf="value.get('from').errors?.pattern_time">time
+                                                    should be 00:00 format</div>
+                                            </div>
+                                        </div>
+                                        <span class="font-weight-bold col-2 text-center arrow-symbool">-</span>
+                                        <div class="col-4 form-group">
+                                            <input type="text" class="form-control time" formControlName="to">
+                                            <div *ngIf="  (submitted &&  value.get('to').errors) || (validating_storeHour &&   value.get('to').errors)"
+                                                class="alert alert-danger mt-1 p-2 mb-0">
+                                                <div *ngIf="value.get('to').errors?.required_time">time
+                                                    is required</div>
+                                                <div *ngIf="value.get('to').errors?.pattern_time">time
+                                                    should be 00:00 format</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <i class="fa fa-plus-circle p-2 mr-2" (click)="validatingThe_StoreHour(j)" *ngIf="lastindex"
+                                    aria-hidden="true">add address</i>
+                                <i class="fa fa-minus-circle p-2" aria-hidden="true" *ngIf="j!=0"
+                                    (click)=" removeStoreHour(j)">remove address</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2 mt-md-0">submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h1 class="text-uppercase text-center text-info">customer details</h1>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>name</th>
+                <th>phone </th>
+                <th>address</th>
+                <th>city</th>
+                <th>zip</th>
+                <th>dayoftheweek</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor=" let x of addingNew_customers;index as i">
+                <td>{{x.name}}</td>
+                <td>{{x.phone }}</td>
+                <td> {{x.address}}</td>
+                <td>{{x.city}}</td>
+                <td>{{x.zip }}</td>
+                <td><button class="btn btn-info" (click)="editTheCustomer_date(x,i)">edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+

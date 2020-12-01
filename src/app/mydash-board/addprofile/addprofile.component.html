@@ -1,0 +1,138 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <form action="" [formGroup]="EducationDetails" (ngSubmit)="onsubmit()">
+                <h1 class="text-info text-center">EducationDetails</h1>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group mb-2">
+                            <label for="addressline1">address line1</label>
+                            <input type="text" class="form-control" id="addressline1" formControlName="addressline1">
+                        </div>
+                        <div *ngIf=" submitted && controls.addressline1.errors"
+                            class="alert alert-danger mt-1 p-2 mb-0">
+                            <div *ngIf="controls.addressline1.errors.required">addressline1 is required</div>
+                            <div *ngIf="controls.addressline1.errors.pattern">invalid addressline1</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group mb-2">
+                            <label for="addressline2">address line2</label>
+                            <input type="text" class="form-control" id="addressline2" formControlName="addressline2">
+                        </div>
+                        <div *ngIf=" submitted && controls.addressline2.errors"
+                            class="alert alert-danger mt-1 p-2 mb-0">
+                            <div *ngIf="controls.addressline2.errors.required">addressline2 is required</div>
+                            <div *ngIf="controls.addressline2.errors.pattern">invalid addressline2</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label class="control-label" for="Country">select state:</label>
+                        <select formControlName="state" (change)="onSelectDistricts($event.target.value)"
+                            class="form-control input-lg" id="state">
+                            <option value="0">Select state</option>
+                            <option *ngFor="let state of getStates()" value={{state.id}}>{{state.name}}</option>
+                        </select>
+                        <div *ngIf=" submitted && controls.state.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                            <div *ngIf="controls.state.errors.required">state is required</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label class="control-label" for="States">select Districts :</label>
+                        <select formControlName="District" (change)="onSelectConstituencie($event.target.value)"
+                            class="form-control input-lg" id="state">
+                            <option value="0">Select State</option>
+                            <option *ngFor="let Districts of District" value={{Districts.id}}>{{Districts.name}}
+                            </option>
+                        </select>
+                        <div *ngIf=" submitted && controls.District.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                            <div *ngIf="controls.District.errors.required">Districts is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label class="control-label" for="City">select constituencie :</label>
+                        <select class="form-control input-lg" id="city" formControlName="constituencie">
+                            <option value="0">Select constituencie</option>
+                            <option *ngFor="let city of cities" value={{city.name}}>{{city.name}}</option>
+                        </select>
+                        <div *ngIf=" submitted && controls.constituencie.errors"
+                            class="alert alert-danger mt-1 p-2 mb-0">
+                            <div *ngIf="controls.constituencie.errors.required">constituencie is required</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="">zipcode</label>
+                            <input type="text" class="form-control" formControlName="zipcode">
+                        </div>
+                        <div *ngIf=" submitted && controls.zipcode.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                            <div *ngIf="controls.zipcode.errors.required">zipcode is required</div>
+                            <div *ngIf="controls.zipcode.errors.pattern">invalid zipcode</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="date1">start date</label>
+                            <input type="date" name="startdate" (ngModelChange)="startdate()"
+                                formControlName="startdate" id="date1" class="form-control">
+                        </div>
+                        <div *ngIf=" submitted && controls.startdate.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                            <div *ngIf="controls.startdate.errors.required">startdate is required</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="date2">end date</label>
+                            <input type="date" min="{{minDate}}" (ngModelChange)="calcDate()" formControlName="endDate"
+                                id="date2" class="form-control">
+                        </div>
+                        <div *ngIf=" submitted && controls.endDate.errors" class="alert alert-danger mt-1 p-2 mb-0">
+                            <div *ngIf="controls.endDate.errors.required">endDate is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 border mt-3" *ngIf="calculateValue">
+                    {{years +"  years  "+    months   +"   months  "+  days +"     days"}}
+                </div>
+                <button class="btn btn-success mt-2">submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <h1 class="text-uppercase text-center text-info">students Details</h1>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>addressline1</th>
+                <th>addressline2</th>
+                <th>state</th>
+                <th>District</th>
+                <th>constituencie</th>
+                <th>zipcode</th>
+                <th>startdate</th>
+                <th>endDate</th>
+                <th>edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor=" let x of studentsDetails;index as i">
+                <td>{{x.addressline1}}</td>
+                <td>{{x.addressline2 }}</td>
+                <td> {{x.state}}</td>
+                <td>{{x.District}}</td>
+                <td>{{x.constituencie }}</td>
+                <td>{{x.zipcode }}</td>
+                <td>{{x.startdate }}</td>
+                <td>{{x.endDate }}</td>
+                <td><button class="btn btn-info" (click)="editeducationdetails(x,i)">edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>

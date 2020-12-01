@@ -1,0 +1,28 @@
+.dash-board{
+background-clip: content-box;
+}
+.dashboard-item{
+    height: 100px;
+}
+.sign_in_user{
+    background-color:#7447ffb5
+}
+.new-user {
+    background-color:lightgray;
+}
+.total-user {
+    background-color:#82eebc;
+    
+}
+.old-user {
+    background-color:#337782;
+}
+i {
+    font-size: 40px;
+}
+a , p {
+    font-size: 16px;
+}
+a:hover {
+    text-decoration: none;
+}

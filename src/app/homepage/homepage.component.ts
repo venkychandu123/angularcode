@@ -12,17 +12,18 @@ public  user={
   password:''
 
  }
-
   constructor(private router:Router) { }
-
-  ngOnInit(): void {
+  ngOnInit() {
   }
-  onsubmit(v){
+ErrorMessageOnsubmit;
+  onsubmit(){
     if(this.user.emailid==="jupallenaresh8800@gmail.com" && this.user.password==="Naresh@123"){
-    this.router.navigate(['/navigation']);
+    this.router.navigate(['/mydashboard']);
     localStorage.setItem("em",this.user.emailid);
-    console.log(v);
+    this.ErrorMessageOnsubmit=false;
+    }else  {
+      this.ErrorMessageOnsubmit=true;
     }
-  }
-
+  }  
 }
+    

@@ -1,20 +1,20 @@
 <div class="container mt-5">
     <div class="row m-0">
-      <div class="col-md-6 offset-3">
+      <div class="col-md-6 offset-md-3">
         <div class="card">
           <div class="card-body">
             <h1 class="text-center text-success text-capitalize">LogIn Form</h1>
-           <form action="" #myform="ngForm" (ngSubmit)="onsubmit(myform)">
+           <form action="" #myform="ngForm" (ngSubmit)="myform.form.valid && onsubmit()">
                <div class="form-group mb-0">
                  email <input type="email"
-                 required 
+                 required email
                  class="form-control"
-                 ngModel
+                 ngModel       
                   #email="ngModel"  name="email"  [(ngModel)]="user.emailid" >
                </div>
                <div *ngIf="(email.invalid && myform.submitted) || (email.invalid && email.touched)">
                    <div class="text-danger" *ngIf="email.errors.required"> email is required </div>
-                   <div class="text-danger" *ngIf="email.errors.pattern"> email is invalid </div>
+                   <div class="text-danger" *ngIf="email.errors.email"> email is invalid </div>
                </div>
                <div class="form-group mb-0">
                 password <input type="password"
@@ -28,6 +28,7 @@
                   <div class="text-danger" *ngIf="password.errors.required"> password is required </div>
                   <div class="text-danger" *ngIf="password.errors.pattern"> password is invalid </div>
               </div>
+              <div class="text-danger alert alert-danger mt-2" *ngIf="ErrorMessageOnsubmit && myform.submitted ">  invalid username or password </div>
                <button class="btn btn-primary mt-3 btn-block">submit</button>
            </form>
           </div>
